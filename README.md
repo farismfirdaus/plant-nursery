@@ -1,4 +1,54 @@
-# Todo
+## Diagram
+
+![image](https://github.com/farismfirdaus/plant-nursery/assets/62270078/9e3d6915-2b74-4172-91c6-380bf948fbc6)
+
+## Endpoint
+
+https://www.postman.com/mission-explorer-62696199/workspace/plant-nursery/overview
+
+## Getting Started
+
+### Dependencies
+
+Please install each of below to your machine:
+
+- Go [installation instruction](https://go.dev/doc/install)
+- Postgres [installation instruction](https://www.postgresql.org/download/)
+
+### Initial Setup
+
+- Clone repository
+  ```
+  $ git clone git@github.com:farismfirdaus/plant-nursery.git
+  $ cd plant-nursery
+  ```
+
+- Setup env variables
+  ```
+  $ cp .env.sample .env
+  ```
+  
+- Setup cert
+  ```
+  $ make cert
+  ```
+
+- Migrate database
+  ```
+  $ make migrate
+  ```
+
+- Seed database
+  ```
+  $ make seed
+  ```
+  
+- Run application
+  ```
+  $ make run
+  ```
+
+## Todo
 
 - [ ] Logging. need more configuration awful log
 - [x] Unit test: customer service
@@ -8,8 +58,9 @@
 - [ ] Unit test: all controller
 - [ ] Unit test: all repository
 - [ ] Unit test: utils
+- [ ] Prettify response struct
 
-# User Stories
+## User Stories
 
 - [x] As a customer I should be able to create a Garden Enthusiasts account;
 - [x] As a customer I should be able to view the list of available plants;\
