@@ -7,11 +7,11 @@ import (
 )
 
 type repository struct {
-	plantRepo repository_plant.Repository
+	plantRepo repository_plant.Plant
 }
 
 func setupRepository(db *gorm.DB) *repository {
 	return &repository{
-		plantRepo: *repository_plant.NewRepository(db),
+		plantRepo: repository_plant.NewRepository(db),
 	}
 }
