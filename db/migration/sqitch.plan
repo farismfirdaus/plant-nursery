@@ -5,3 +5,4 @@
 2_plant 2023-10-11T21:08:29Z faris <faris@Faris> # add plant table
 3_cart 2023-10-11T21:13:17Z faris <faris@Faris> # add cart table
 4_order 2023-10-11T21:16:08Z faris <faris@Faris> # add order table
+5_rename_price_to_total_amount 2023-10-12T14:21:17Z faris <faris@Faris> # rename price to total amount in cart table

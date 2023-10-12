@@ -11,6 +11,9 @@ type Plant interface {
 	// GetList retreive list of plants.
 	// TODO: implement pagination
 	GetList(ctx context.Context) ([]*entity.Plant, error)
+
+	// GetListByIDs retreive list of plants by ids.
+	GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, error)
 }
 
 type Handler struct {
@@ -27,4 +30,8 @@ func NewHandler(
 
 func (h *Handler) GetList(ctx context.Context) ([]*entity.Plant, error) {
 	return h.repo.GetList(ctx)
+}
+
+func (h *Handler) GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, error) {
+	return h.repo.GetListByIDs(ctx, ids)
 }

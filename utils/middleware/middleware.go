@@ -3,15 +3,24 @@ package middleware
 import (
 	"errors"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+
+	"github.com/farismfirdaus/plant-nursery/auth"
+	apperr "github.com/farismfirdaus/plant-nursery/errors"
+	"github.com/farismfirdaus/plant-nursery/utils/response"
 )
 
-func New(r *gin.Engine) {
+var client auth.Auth
+
+func New(r *gin.Engine, c auth.Auth) {
 	r.Use(Logger())
 	r.Use(gin.Recovery())
+
+	client = c
 }
 
 func Logger() gin.HandlerFunc {
@@ -48,5 +57,31 @@ func Logger() gin.HandlerFunc {
 			// log error
 			log.Error().Fields(logFields).Errs("errors", errs).Send()
 		}
+	}
+}
+
+func Authenticate() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx := c.Request.Context()
+
+		token := c.Request.Header.Get("Authorization")
+
+		if !strings.HasPrefix(token, "Bearer ") {
+			response.BuildErrors(c, apperr.Unauthorized)
+			c.Abort()
+			return
+		}
+
+		token = strings.TrimPrefix(token, "Bearer ")
+
+		customerID, err := client.Verify(ctx, token)
+		if err != nil {
+			response.BuildErrors(c, apperr.Unauthorized)
+			c.Abort()
+			return
+		}
+
+		c.Set(gin.AuthUserKey, customerID)
+		c.Next()
 	}
 }

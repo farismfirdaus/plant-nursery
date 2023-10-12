@@ -26,7 +26,7 @@ func main() {
 
 	// init router
 	r := gin.New()
-	middleware.New(r)
+	middleware.New(r, client)
 
 	v1 := r.Group("api/v1")
 
