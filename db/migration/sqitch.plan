@@ -1,0 +1,7 @@
+%syntax-version=1.0.0
+%project=plant-nursery
+
+1_customer 2023-10-11T21:05:39Z faris <faris@Faris> # add customer table
+2_plant 2023-10-11T21:08:29Z faris <faris@Faris> # add plant table
+3_cart 2023-10-11T21:13:17Z faris <faris@Faris> # add cart table
+4_order 2023-10-11T21:16:08Z faris <faris@Faris> # add order table
