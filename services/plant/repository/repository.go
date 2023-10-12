@@ -15,6 +15,9 @@ type Plant interface {
 	// Creates insert new plant records.
 	// returning inserted ids on success.
 	Creates(ctx context.Context, plants []*entity.Plant) error
+
+	// GetList retreive list of plants
+	GetList(ctx context.Context) ([]*entity.Plant, error)
 }
 
 type Repository struct {
@@ -27,4 +30,9 @@ func NewRepository(gormDB *gorm.DB) *Repository {
 
 func (r *Repository) Creates(ctx context.Context, plants []*entity.Plant) error {
 	return r.DB.WithContext(ctx).Create(plants).Error
+}
+
+func (r *Repository) GetList(ctx context.Context) (res []*entity.Plant, err error) {
+	err = r.DB.WithContext(ctx).Find(&res).Error
+	return
 }
