@@ -3,8 +3,8 @@
 - [ ] Logging. need more configuration awful log
 - [x] Unit test: customer service
 - [x] Unit test: cart service
-- [ ] Unit test: plant service
-- [ ] Unit test: order service
+- [x] Unit test: plant service
+- [x] Unit test: order service
 - [ ] Unit test: all controller
 - [ ] Unit test: all repository
 - [ ] Unit test: utils
