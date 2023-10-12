@@ -18,6 +18,9 @@ type Plant interface {
 
 	// GetList retreive list of plants
 	GetList(ctx context.Context) ([]*entity.Plant, error)
+
+	// GetListByIDs retreive list of plants by ids
+	GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, error)
 }
 
 type Repository struct {
@@ -34,5 +37,10 @@ func (r *Repository) Creates(ctx context.Context, plants []*entity.Plant) error 
 
 func (r *Repository) GetList(ctx context.Context) (res []*entity.Plant, err error) {
 	err = r.DB.WithContext(ctx).Find(&res).Error
+	return
+}
+
+func (r *Repository) GetListByIDs(ctx context.Context, ids []int) (res []*entity.Plant, err error) {
+	err = r.DB.WithContext(ctx).Where("id IN ?", ids).Find(&res).Error
 	return
 }

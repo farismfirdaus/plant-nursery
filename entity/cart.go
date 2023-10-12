@@ -11,6 +11,7 @@ type Cart struct {
 	CustomerID  int
 	Status      CartStatus
 	TotalAmount decimal.Decimal
+	CartItems   []*CartItem `gorm:"-"` // ignore this field when write and read with struct
 	CreatedAt   time.Time
 	CreatedBy   string
 	UpdatedAt   *time.Time

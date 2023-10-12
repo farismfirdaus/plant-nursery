@@ -46,6 +46,15 @@ var (
 
 	// InvalidPasswordNotMatch client request email not exists
 	InvalidPasswordNotMatch = New("password not match", 505, http.StatusBadRequest)
+
+	// InvalidCustomerID client request invalid customer id
+	InvalidCustomerID = New("invalid customer id", 506, http.StatusBadRequest)
+
+	// InvalidPlantID client request invalid plant id
+	InvalidPlantID = New("invalid plant id", 507, http.StatusBadRequest)
+
+	// InvalidStockNotAvailable client request stock not available
+	InvalidStockNotAvailable = New("stock not available", 508, http.StatusBadRequest)
 )
 
 // New create a new error

@@ -7,14 +7,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/farismfirdaus/plant-nursery/entity"
-
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/rs/zerolog/log"
+
+	"github.com/farismfirdaus/plant-nursery/entity"
+	apperr "github.com/farismfirdaus/plant-nursery/errors"
 )
-
-type customerIDCtxKey struct{}
-
-var CustomerIDKey customerIDCtxKey
 
 type Auth interface {
 	Sign(context.Context, *entity.Customer) (string, error)
@@ -68,23 +66,26 @@ func (c *CustomerAuth) Sign(ctx context.Context, customer *entity.Customer) (str
 func (c *CustomerAuth) Verify(ctx context.Context, token string) (int, error) {
 	key, err := jwt.ParseRSAPublicKeyFromPEM(c.publicKey)
 	if err != nil {
-		return 0, fmt.Errorf("error while parsing public key: %w", err)
+		log.Err(err).Msgf("error parsing public key")
+		return 0, apperr.Unauthorized
 	}
 
 	tok, err := jwt.Parse(token, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("unexpected method: %s", t.Header["alg"])
+			log.Err(err).Msgf("unexpected method: %s", t.Header["alg"])
+			return nil, apperr.Unauthorized
 		}
 
 		return key, nil
 	})
 	if err != nil {
-		return 0, fmt.Errorf("validate: %w", err)
+		log.Err(err).Msgf("error parsing jwt")
+		return 0, apperr.Unauthorized
 	}
 
 	claims, ok := tok.Claims.(jwt.MapClaims)
 	if !ok || !tok.Valid {
-		return 0, fmt.Errorf("validate: invalid")
+		return 0, apperr.Unauthorized
 	}
 
 	return int(claims["dat"].(float64)), nil
