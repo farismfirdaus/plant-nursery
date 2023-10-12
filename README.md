@@ -1,4 +1,4 @@
-# Todo
+# User Stories
 
 - [ ] As a customer I should be able to create a Garden Enthusiasts account;
 - [ ] As a customer I should be able to view the list of available plants;\
