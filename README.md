@@ -1,3 +1,14 @@
+# Todo
+
+- [ ] Logging. need more configuration awful log
+- [x] Unit test: customer service
+- [ ] Unit test: cart service
+- [ ] Unit test: plant service
+- [ ] Unit test: order service
+- [ ] Unit test: all controller
+- [ ] Unit test: all repository
+- [ ] Unit test: utils
+
 # User Stories
 
 - [x] As a customer I should be able to create a Garden Enthusiasts account;
