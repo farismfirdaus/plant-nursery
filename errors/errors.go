@@ -55,6 +55,9 @@ var (
 
 	// InvalidStockNotAvailable client request stock not available
 	InvalidStockNotAvailable = New("stock not available", 508, http.StatusBadRequest)
+
+	// InvalidCartNotFound client request cart not found
+	InvalidCartNotFound = New("cart not found", 509, http.StatusNotFound)
 )
 
 // New create a new error

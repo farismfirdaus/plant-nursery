@@ -66,6 +66,20 @@ func (_m *Plant) GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, 
 	return r0, r1
 }
 
+// UpdateStockByID provides a mock function with given fields: ctx, id, stock
+func (_m *Plant) UpdateStockByID(ctx context.Context, id int, stock int) error {
+	ret := _m.Called(ctx, id, stock)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, int, int) error); ok {
+		r0 = rf(ctx, id, stock)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // NewPlant creates a new instance of Plant. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewPlant(t interface {
