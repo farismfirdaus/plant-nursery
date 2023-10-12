@@ -38,7 +38,7 @@ var (
 	// InvalidPassword client request empty password
 	InvalidPassword = New("password should not be empty", 502, http.StatusBadRequest)
 
-	// InvalidPassword client request email that has already been taken
+	// InvalidEmailAlreadyTaken client request email that has already been taken
 	InvalidEmailAlreadyTaken = New("email already been taken", 503, http.StatusBadRequest)
 
 	// InvalidEmailNotFound client request email not exists
