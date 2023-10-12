@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/mock"
 	"gorm.io/gorm"
 
-	auth_mock "github.com/farismfirdaus/plant-nursery/auth/mock"
 	"github.com/farismfirdaus/plant-nursery/entity"
 	apperr "github.com/farismfirdaus/plant-nursery/errors"
+
+	// mocks
+	auth_mock "github.com/farismfirdaus/plant-nursery/auth/mock"
 	repo_mock "github.com/farismfirdaus/plant-nursery/services/customer/repository/mock"
 )
 
