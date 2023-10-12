@@ -14,6 +14,9 @@ type Plant interface {
 
 	// GetListByIDs retreive list of plants by ids.
 	GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, error)
+
+	// UpdateStockByID update plant stock by id
+	UpdateStockByID(ctx context.Context, id int, stock int) error
 }
 
 type Handler struct {
@@ -34,4 +37,8 @@ func (h *Handler) GetList(ctx context.Context) ([]*entity.Plant, error) {
 
 func (h *Handler) GetListByIDs(ctx context.Context, ids []int) ([]*entity.Plant, error) {
 	return h.repo.GetListByIDs(ctx, ids)
+}
+
+func (h *Handler) UpdateStockByID(ctx context.Context, id int, stock int) error {
+	return h.repo.UpdateStockByID(ctx, id, stock)
 }

@@ -82,6 +82,32 @@ func (_m *Cart) GetActiveByCustomerID(ctx context.Context, to db.TrxObj, custome
 	return r0, r1
 }
 
+// GetByIDAndCustomerID provides a mock function with given fields: ctx, to, id, customerID
+func (_m *Cart) GetByIDAndCustomerID(ctx context.Context, to db.TrxObj, id int, customerID int) (*entity.Cart, error) {
+	ret := _m.Called(ctx, to, id, customerID)
+
+	var r0 *entity.Cart
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, db.TrxObj, int, int) (*entity.Cart, error)); ok {
+		return rf(ctx, to, id, customerID)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, db.TrxObj, int, int) *entity.Cart); ok {
+		r0 = rf(ctx, to, id, customerID)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*entity.Cart)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, db.TrxObj, int, int) error); ok {
+		r1 = rf(ctx, to, id, customerID)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetListCartItemsByCartID provides a mock function with given fields: ctx, to, cartID
 func (_m *Cart) GetListCartItemsByCartID(ctx context.Context, to db.TrxObj, cartID int) ([]*entity.CartItem, error) {
 	ret := _m.Called(ctx, to, cartID)
@@ -115,6 +141,20 @@ func (_m *Cart) Update(ctx context.Context, to db.TrxObj, cart *entity.Cart) err
 	var r0 error
 	if rf, ok := ret.Get(0).(func(context.Context, db.TrxObj, *entity.Cart) error); ok {
 		r0 = rf(ctx, to, cart)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// UpdateStatus provides a mock function with given fields: ctx, to, id, status
+func (_m *Cart) UpdateStatus(ctx context.Context, to db.TrxObj, id int, status entity.CartStatus) error {
+	ret := _m.Called(ctx, to, id, status)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, db.TrxObj, int, entity.CartStatus) error); ok {
+		r0 = rf(ctx, to, id, status)
 	} else {
 		r0 = ret.Error(0)
 	}

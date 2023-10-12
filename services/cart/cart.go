@@ -18,6 +18,9 @@ type Cart interface {
 	// Get retreive cart and its items
 	Get(ctx context.Context, customerID int) (*entity.Cart, error)
 
+	// Get retreive cart and its items by id and customer id
+	GetByIDandCustomerID(ctx context.Context, id int, customerID int) (*entity.Cart, error)
+
 	// AddItems
 	// creating new cart item if plant id is not available in cart
 	// updating quantity cart item if plant id is available in cart
@@ -25,6 +28,9 @@ type Cart interface {
 	//  	 this validation is ignored now, so user can subtract their cart item by providing negative number
 	//		 negative quantity in cart items is possible
 	AddItems(ctx context.Context, customerID int, items []*AddItemsRequest) []error
+
+	// CloseCartByID closing cart by id
+	CloseCartByID(ctx context.Context, id int) error
 
 	// TODO: delete cart item
 }
@@ -81,6 +87,26 @@ func (h *Handler) Get(ctx context.Context, customerID int) (cart *entity.Cart, e
 		return nil, err
 	}
 	return
+}
+
+func (h *Handler) GetByIDandCustomerID(ctx context.Context, id int, customerID int) (*entity.Cart, error) {
+	if customerID <= 0 {
+		return nil, apperr.InvalidCustomerID
+	}
+
+	cart, err := h.repo.GetByIDAndCustomerID(ctx, nil, id, customerID)
+	if err != nil {
+		return nil, err
+	}
+
+	cartItems, err := h.repo.GetListCartItemsByCartID(ctx, nil, cart.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	cart.CartItems = cartItems
+
+	return cart, nil
 }
 
 func (h *Handler) AddItems(ctx context.Context, customerID int, items []*AddItemsRequest) (errs []error) {
@@ -224,4 +250,8 @@ func (h *Handler) AddItems(ctx context.Context, customerID int, items []*AddItem
 	}
 
 	return nil
+}
+
+func (h *Handler) CloseCartByID(ctx context.Context, id int) error {
+	return h.repo.UpdateStatus(ctx, nil, id, entity.CartStatusClosed)
 }

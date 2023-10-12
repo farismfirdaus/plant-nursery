@@ -10,6 +10,7 @@ type Order struct {
 	ID          int
 	CustomerID  int
 	TotalAmount decimal.Decimal
+	OrderItems  []*OrderItem `gorm:"-"` // ignore this field when write and read with struct
 	CreatedAt   time.Time
 	CreatedBy   string
 	UpdatedAt   *time.Time
