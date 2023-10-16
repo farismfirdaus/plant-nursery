@@ -20,6 +20,9 @@ type Order interface {
 
 	// GetList retreives all order history
 	GetList(ctx context.Context, customerID int) ([]*entity.Order, error)
+
+	// GetListUniqueItem retreives all unique purchased plants
+	GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error)
 }
 
 type Handler struct {
@@ -58,6 +61,28 @@ func (h *Handler) GetList(ctx context.Context, customerID int) ([]*entity.Order,
 	}
 
 	return orders, nil
+}
+
+func (h *Handler) GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error) {
+	orderItems, err := h.repo.GetListUniqueItems(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+
+	var (
+		plantIds = []int{}
+	)
+
+	for _, oi := range orderItems {
+		plantIds = append(plantIds, oi.PlantID)
+	}
+
+	plants, err := h.plantSvc.GetListByIDs(ctx, plantIds)
+	if err != nil {
+		return nil, err
+	}
+
+	return plants, err
 }
 
 func (h *Handler) Checkout(ctx context.Context, customerID int, cartID int) error {

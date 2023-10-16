@@ -18,6 +18,9 @@ type Order interface {
 	// GetItemsListByOrderID retreives list of order items by order id
 	GetItemsListByOrderID(ctx context.Context, orderID int) ([]*entity.OrderItem, error)
 
+	// GetListUniqueItems retreive list of unique plant id by customer id
+	GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.OrderItem, error)
+
 	// Create insert a new order record.
 	Create(ctx context.Context, to db.TrxObj, order *entity.Order) error
 
@@ -48,4 +51,9 @@ func (r *Repository) Create(ctx context.Context, to db.TrxObj, order *entity.Ord
 }
 func (r *Repository) CreateItems(ctx context.Context, to db.TrxObj, orderItems []*entity.OrderItem) error {
 	return r.Trx(to).WithContext(ctx).Create(orderItems).Error
+}
+
+func (r *Repository) GetListUniqueItems(ctx context.Context, customerId int) (res []*entity.OrderItem, err error) {
+	err = r.DB.WithContext(ctx).Raw("select distinct oi.plant_id from orders s join order_items oi on s.id = oi.order_id where s.customer_id = ?", customerId).Scan(&res).Error
+	return
 }
