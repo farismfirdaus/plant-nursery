@@ -122,6 +122,32 @@ func (_m *Order) GetListByCustomerID(ctx context.Context, customerID int) ([]*en
 	return r0, r1
 }
 
+// GetListUniqueItems provides a mock function with given fields: ctx, customerId
+func (_m *Order) GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.OrderItem, error) {
+	ret := _m.Called(ctx, customerId)
+
+	var r0 []*entity.OrderItem
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, int) ([]*entity.OrderItem, error)); ok {
+		return rf(ctx, customerId)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, int) []*entity.OrderItem); ok {
+		r0 = rf(ctx, customerId)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]*entity.OrderItem)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, int) error); ok {
+		r1 = rf(ctx, customerId)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // NewOrder creates a new instance of Order. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewOrder(t interface {
