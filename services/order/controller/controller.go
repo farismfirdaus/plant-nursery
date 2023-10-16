@@ -21,7 +21,7 @@ func New(g *gin.RouterGroup, service order.Order) {
 		service: service,
 	}
 	g.GET("/orders", middleware.Authenticate(), c.GetList)
-	g.GET("/orders/items", middleware.Authenticate(), c.GetListLeastUniqueItems)
+	g.GET("/orders/items", middleware.Authenticate(), c.GetListUniqueItems)
 	g.POST("/orders", middleware.Authenticate(), c.Checkout)
 }
 
@@ -47,7 +47,7 @@ func (c *Controller) GetList(ctx *gin.Context) {
 	response.BuildSuccess(ctx, http.StatusOK, orders)
 }
 
-func (c *Controller) GetListLeastUniqueItems(ctx *gin.Context) {
+func (c *Controller) GetListUniqueItems(ctx *gin.Context) {
 	req, exists := ctx.Get(gin.AuthUserKey)
 	if !exists {
 		response.BuildErrors(ctx, apperr.Unauthorized)
@@ -60,7 +60,7 @@ func (c *Controller) GetListLeastUniqueItems(ctx *gin.Context) {
 		return
 	}
 
-	orderItems, err := c.service.GetListLeastUniqueItems(ctx.Request.Context(), customerID)
+	orderItems, err := c.service.GetListUniqueItems(ctx.Request.Context(), customerID)
 	if err != nil {
 		response.BuildErrors(ctx, err)
 		return

@@ -21,7 +21,8 @@ type Order interface {
 	// GetList retreives all order history
 	GetList(ctx context.Context, customerID int) ([]*entity.Order, error)
 
-	GetListLeastUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error)
+	// GetListUniqueItem retreives all unique purchased plants
+	GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error)
 }
 
 type Handler struct {
@@ -62,7 +63,7 @@ func (h *Handler) GetList(ctx context.Context, customerID int) ([]*entity.Order,
 	return orders, nil
 }
 
-func (h *Handler) GetListLeastUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error) {
+func (h *Handler) GetListUniqueItems(ctx context.Context, customerId int) ([]*entity.Plant, error) {
 	orderItems, err := h.repo.GetListUniqueItems(ctx, customerId)
 	if err != nil {
 		return nil, err
